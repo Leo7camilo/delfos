@@ -12,3 +12,8 @@ spring:
     url: jdbc:mysql://localhost:3306/delfos?characterEncoding=UTF-8&useLegacyDatetimeCode=true&createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
     username: root
     password: 1234
+    
+api:
+  version: v1
+  via:
+    cep: https://viacep.com.br/ws/
