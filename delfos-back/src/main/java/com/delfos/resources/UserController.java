@@ -1,6 +1,5 @@
 package com.delfos.resources;
 
-import java.beans.Beans;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
