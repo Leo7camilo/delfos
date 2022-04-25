@@ -13,7 +13,23 @@ spring:
     username: root
     password: 1234
     
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      
+  profiles:
+    active: oauth-security
+    group:
+      prod: oauth-security
+    
 api:
   version: v1
   via:
     cep: https://viacep.com.br/ws/
+    
+    
+delfos:
+  seguranca:
+    redirects-permitidos: http://local-delfos.com:8000/authorized, https://oidcdebugger.com/debug
+    auth-server-url: http://localhost:8080
+  origin-permitida: http://local-delfos.com:8000

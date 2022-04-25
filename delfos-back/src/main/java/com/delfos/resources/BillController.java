@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class BillController {
 	private MessageSource messageSource;
 	
 	@GetMapping("users/{userId}")
+	@PreAuthorize("hasAuthority('ROLE_SEARCH_BILL') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Bill> findById(@PathVariable Long userId) {
 		
 		

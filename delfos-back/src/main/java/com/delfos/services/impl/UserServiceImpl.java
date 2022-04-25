@@ -39,6 +39,12 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.findAll(spec, pageable);
 	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		Optional<User> user = userRepository.findByEmail(email);
+		return user;
+	}
 	
 	
 	
