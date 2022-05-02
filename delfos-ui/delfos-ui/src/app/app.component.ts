@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {{
+export class AppComponent implements OnInit {
   title = 'delfos-ui';
 
   constructor(
@@ -17,6 +21,6 @@ export class AppComponent implements OnInit {{
   ngOnInit() {
     this.translateService.setDefaultLang('pt');
     this.translateService.get('primeng')
-      .subscribe(res => this.config.setTranslation(res));
+      .subscribe((res: any) => this.config.setTranslation(res));
   }
 }

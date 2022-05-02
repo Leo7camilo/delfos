@@ -44,12 +44,15 @@ public class ResourceServerConfig {
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    	
         http.authorizeRequests()
-                .antMatchers("/categorias").permitAll()
+                .antMatchers("/v1/tip").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .csrf().disable()
                 .oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+        
+        
 		http.logout(
 			logoutConfig -> {
 				logoutConfig.logoutSuccessHandler(
