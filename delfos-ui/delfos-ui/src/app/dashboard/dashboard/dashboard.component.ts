@@ -57,9 +57,10 @@ export class DashboardComponent implements OnInit {
       .then(dados => {
         const diasDoMes = this.configurarDiasMes();
         const totaisReceitas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.tipo === 'RECEITA'), diasDoMes);
+          dados.filter(dado => dado.tipo === 'DESPESA'), diasDoMes);
         const totaisDespesas = this.totaisPorCadaDiaMes(
           dados.filter(dado => dado.tipo === 'DESPESA'), diasDoMes);
+
 
         this.lineChartData = {
           labels: diasDoMes,

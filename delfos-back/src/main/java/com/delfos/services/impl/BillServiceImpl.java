@@ -38,7 +38,8 @@ public class BillServiceImpl implements BillService {
 
 		Root<Bill> root = criteriaQuery.from(Bill.class);
 		
-		criteriaQuery.select(criteriaBuilder.construct(BillStatiticsDay.class, 
+		criteriaQuery.select(criteriaBuilder.construct(BillStatiticsDay.class,
+				root.get(Bill_.type),
 				root.get(Bill_.date),
 				criteriaBuilder.sum(root.get(Bill_.cashValue))));
 		
@@ -46,10 +47,13 @@ public class BillServiceImpl implements BillService {
 		LocalDate primeiroDia = monthReference.withDayOfMonth(1);
 		LocalDate ultimoDia = monthReference.withDayOfMonth(monthReference.lengthOfMonth());
 
-		criteriaQuery.where(criteriaBuilder.greaterThanOrEqualTo(root.get(Bill_.date), primeiroDia),
-				criteriaBuilder.lessThanOrEqualTo(root.get(Bill_.date), ultimoDia));
+		criteriaQuery.where(
+				criteriaBuilder.greaterThanOrEqualTo(root.get(Bill_.date),
+					primeiroDia),
+				criteriaBuilder.lessThanOrEqualTo(root.get(Bill_.date), 
+					ultimoDia));
 
-		criteriaQuery.groupBy(root.get(Bill_.date));
+		criteriaQuery.groupBy(root.get(Bill_.type),root.get(Bill_.date));
 
 		TypedQuery<BillStatiticsDay> typedQuery = manager.createQuery(criteriaQuery);
 

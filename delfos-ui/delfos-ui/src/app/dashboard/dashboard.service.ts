@@ -18,12 +18,12 @@ export class DashboardService {
   }
 
   lancamentosPorCategoria(): Promise<Array<any>> {
-    return firstValueFrom(this.http.get(`${this.billUrl}/users`))
+    return firstValueFrom(this.http.get(`${this.billUrl}/user`))
       .then((response : any) => response);
   }
 
   lancamentosPorDia(): Promise<Array<any>> {
-    return firstValueFrom(this.http.get(`${this.billUrl}/estatisticas/por-dia`))
+    return firstValueFrom(this.http.get(`${this.billUrl}/statistics/by-day`))
       .then((response : any) => {
         const dados = response;
         this.converterStringsParaDatas(dados);
@@ -34,7 +34,7 @@ export class DashboardService {
 
   private converterStringsParaDatas(dados: Array<any>) {
     for (const dado of dados) {
-      dado.dia = moment(dado.dia, 'YYYY-MM-DD').toDate();
+      dado.date = moment(dado.date, 'YYYY-MM-DD').toDate();
     }
   }
 }

@@ -5,15 +5,20 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 
+import com.delfos.enums.BillType;
+import com.delfos.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,6 +43,10 @@ public class Bill implements Serializable{
 	private BigDecimal cashValue;
 	
 	private Float kvwValue;
+	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private BillType type;
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
