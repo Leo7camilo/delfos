@@ -15,7 +15,7 @@ export class AuthorizedComponent implements OnInit {
     private route: Router
   ) { }
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params:any) => {
       if (params.code) {
         this.auth.obterNovoAccessTokenComCode(params.code, params.state)
@@ -29,6 +29,23 @@ export class AuthorizedComponent implements OnInit {
         this.route.navigate(['/']);
       }
     })
+  }*/
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params:any) => {
+      if (params.code) {
+        this.auth.obterNovoAccessTokenComCode(params.code, params.state)
+          .then(()=> {
+            this.route.navigate(['/'])
+          })
+          .catch((e:any) => {
+            console.error(e);
+            this.route.navigate(['/'])
+          });
+      } else {
+        this.route.navigate(['/']);
+      }
+    });
   }
 
 }

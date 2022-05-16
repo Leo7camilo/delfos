@@ -6,8 +6,8 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.compo
 
 const routes: Routes = [
     { path: 'dashboard', loadChildren: () => import('../app/dashboard/dashboard.module').then(m => m.DashboardModule) },
-    //{ path: 'lancamentos', loadChildren: () => import('../app/lancamentos/lancamentos.module').then(m => m.LancamentosModule) },
-    //{ path: 'pessoas', loadChildren: () => import('../app/pessoas/pessoas.module').then(m => m.PessoasModule) },
+    { path: 'bandeira', loadChildren: () => import('../app/bandeira/bandeira.module').then(m => m.BandeiraModule) },
+    { path: 'dica', loadChildren: () => import('../app/dica/dica.module').then(m => m.DicaModule) },
     //{ path: 'relatorios', loadChildren: () => import('../app/relatorios/relatorios.module').then(m => m.RelatoriosModule) },
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

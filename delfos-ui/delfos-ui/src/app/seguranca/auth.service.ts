@@ -15,8 +15,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService  
-  ) { 
+    private jwtHelper: JwtHelperService
+  ) {
     this.carregarToken();
   }
 
@@ -47,7 +47,7 @@ export class AuthService {
       'code_challenge=' + codeChallenge,
       'code_challenge_method=' + challengeMethod,
       'state=' + state,
-      'redirect_uri=' + redirectURI 
+      'redirect_uri=' + redirectURI
     ]
 
     window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
@@ -59,7 +59,7 @@ export class AuthService {
     window.location.href = environment.apiUrl + '/logout?returnTo=' + environment.logoutRedirectToUrl;
   }
 
-  obterNovoAccessTokenComCode(code: string, state: string) : Promise<any>{
+  /*obterNovoAccessTokenComCode(code: string, state: string) : Promise<any>{
     const stateSalvo = localStorage.getItem('state');
 
     if (stateSalvo !== state) {
@@ -89,7 +89,45 @@ export class AuthService {
         console.error('Erro ao gerar o token com o code.', response);
         return Promise.resolve();
       });
-      
+
+  }*/
+
+  obterNovoAccessTokenComCode(code: string, state: string) : Promise<any>{
+    const stateSalvo = localStorage.getItem('state');
+
+    if (stateSalvo !== state) {
+      return Promise.reject();
+    }
+
+    const codeVerifier = localStorage.getItem('codeVerifier')!;
+
+    const payload = new HttpParams()
+      .append('grant_type', 'authorization_code')
+      .append('code', code)
+      .append('redirect_uri', environment.oauthCallbackUrl)
+      .append('code_verifier', codeVerifier);
+
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+
+    return this.http.post<any>(this.oauthTokenUrl, payload, { headers })
+      .toPromise()
+      .then((response:any) => {
+        this.armazenarToken(response['access_token']);
+        this.armazenarRefreshToken(response['refresh_token']);
+        console.log('Novo access token criado!');
+
+        localStorage.removeItem('state');
+        localStorage.removeItem('codeVerifier');
+
+        return Promise.resolve();
+      })
+      .catch((response:any) => {
+        console.error('Erro ao gerar o token com o code.', response);
+        return Promise.reject();
+      });
+
   }
 
   obterNovoAccessToken(): Promise<void> {
@@ -116,14 +154,14 @@ export class AuthService {
   }
 
   isAccessTokenInvalido() {
-    const token = localStorage.getItem('token');  
+    const token = localStorage.getItem('token');
     return !token || this.jwtHelper.isTokenExpired(token);
   }
 
   temPermissao(permissao: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
-  
+
   temQualquerPermissao(roles: any) {
     for (const role of roles) {
       if (this.temPermissao(role)) {
@@ -133,11 +171,11 @@ export class AuthService {
 
     return false;
   }
-  
+
   public armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     console.log(this.jwtPayload);
-    
+
     localStorage.setItem('token', token);
   }
 
@@ -166,6 +204,6 @@ export class AuthService {
       resultado += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return resultado;
-} 
+}
 
 }

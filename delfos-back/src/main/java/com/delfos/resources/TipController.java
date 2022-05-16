@@ -38,7 +38,7 @@ public class TipController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Tip> createUser(@Valid @RequestBody Tip tip) {
+	public ResponseEntity<Tip> createTip(@Valid @RequestBody Tip tip) {
 
 		Tip tipCreated = tipService.createTip(tip);
 		return new ResponseEntity<Tip>(tipCreated, HttpStatus.CREATED);

@@ -75,30 +75,9 @@ public class AuthServerConfig {
                                 .requireAuthorizationConsent(true)
                                 .build())
                 .build();
-
-        RegisteredClient mobileClient = RegisteredClient
-                .withId(UUID.randomUUID().toString())
-                .clientId("mobile")
-                .clientSecret(passwordEncoder.encode("m0b1le"))
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUris(uris -> uris.addAll(delfosApiProperty.getSeguranca().getRedirectsPermitidos()))
-                .scope("read")
-                .tokenSettings(TokenSettings.builder()
-                        .accessTokenTimeToLive(Duration.ofMinutes(30))
-                        .refreshTokenTimeToLive(Duration.ofDays(24))
-                        .build())
-                .clientSettings(ClientSettings.builder()
-                        .requireAuthorizationConsent(false)
-                        .build())
-                .build();
-
-
         return new InMemoryRegisteredClientRepository(
                 Arrays.asList(
-                        angularClient,
-                        mobileClient
+                        angularClient
                 )
         );
     }
