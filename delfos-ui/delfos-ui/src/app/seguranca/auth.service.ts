@@ -9,15 +9,51 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+
+  oauthUrlLogin = environment.apiUrl + '/login';
+
   oauthTokenUrl = environment.apiUrl + '/oauth2/token';
   oauthAuthorizeUrl = environment.apiUrl + '/oauth2/authorize'
   jwtPayload: any ;
+
+
 
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
     this.carregarToken();
+  }
+
+  login1(usuario: string, senha: string): Promise<void> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+
+    const body2 = {
+      username: usuario,
+      password: senha,
+    }
+
+    const body = `username=${usuario}&password=${senha}&grant_type=password`;
+
+    return this.http.post(this.oauthUrlLogin, body,
+        { headers, withCredentials: true })
+      .toPromise()
+      .then((response : any) => {
+        this.armazenarToken(response['access_token']);
+      })
+      .catch(response => {
+        if (response.status === 400) {
+          const responseJson = response.json();
+
+          if (responseJson.error === 'invalid_grant') {
+            return Promise.reject('Usuário ou senha inválida!');
+          }
+        }
+
+        return Promise.reject(response);
+      });
   }
 
   login() {

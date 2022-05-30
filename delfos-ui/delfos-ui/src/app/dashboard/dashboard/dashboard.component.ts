@@ -1,7 +1,9 @@
+import { BillStaticsUser } from './../../shared/bill-statitics-user';
 import { Component, OnInit } from '@angular/core';
 
 import { DashboardService } from './../dashboard.service';
 import { DecimalPipe } from '@angular/common';
+import { AuthService } from 'src/app/seguranca/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +14,11 @@ export class DashboardComponent implements OnInit {
 
   pieChartData: any;
   lineChartData: any;
+
+  billStaticsUser!: BillStaticsUser;
+
+
+  usuarioLogado: string = ''
 
   options = {
     tooltips: {
@@ -28,22 +35,34 @@ export class DashboardComponent implements OnInit {
   };
 
   constructor(
+    public auth: AuthService,
     private dashboardService: DashboardService,
     private decimalPipe: DecimalPipe) { }
 
   ngOnInit() {
+
+    this.usuarioLogado = this.auth.jwtPayload?.name;
+
     this.configurarGraficoPizza();
     this.configurarGraficoLinha();
   }
 
   configurarGraficoPizza() {
-    this.dashboardService.lancamentosPorCategoria()
+    this.dashboardService.lancamentosPorUsuarioMensal(this.usuarioLogado)
       .then(dados => {
+
+        //this.billStaticsUser = dados;
+
+        console.log("Olaaaa "+ JSON.stringify(dados));
+        //let typeLabel = dados['type'];
+        //let dataSets = dados['cashValue'];
+
         this.pieChartData = {
-          labels: dados.map(dado => dado.categoria.nome),
+          labels: dados.map(dado => dado.type),
+          //labels: this.billStaticsUser.type,
           datasets: [
             {
-              data: dados.map(dado => dado.total),
+              data: dados.map(dado => dado.cashValue),
               backgroundColor: ['#FF9900', '#109618', '#990099', '#3B3EAC', '#0099C6',
                                   '#DD4477', '#3366CC', '#DC3912']
             }
@@ -53,13 +72,13 @@ export class DashboardComponent implements OnInit {
   }
 
   configurarGraficoLinha() {
-    this.dashboardService.lancamentosPorDia()
+    this.dashboardService.lancamentosPorUsuarioPorDia(this.usuarioLogado)
       .then(dados => {
         const diasDoMes = this.configurarDiasMes();
         const totaisReceitas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.tipo === 'DESPESA'), diasDoMes);
+          dados.filter(dado => dado.type === 'DESPESA'), diasDoMes);
         const totaisDespesas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.tipo === 'DESPESA'), diasDoMes);
+          dados.filter(dado => dado.type === 'DESPESA'), diasDoMes);
 
 
         this.lineChartData = {
@@ -69,7 +88,8 @@ export class DashboardComponent implements OnInit {
               label: 'Receitas',
               data: totaisReceitas,
               borderColor: '#3366CC'
-            }, {
+            },
+            {
               label: 'Despesas',
               data: totaisDespesas,
               borderColor: '#D62B00'
@@ -85,8 +105,8 @@ export class DashboardComponent implements OnInit {
       let total = 0;
 
       for (const dado of dados) {
-        if (dado.dia.getDate() === dia) {
-          total = dado.total;
+        if (dado.date.getDate() === dia) {
+          total = dado.cashValue;
 
           break;
         }

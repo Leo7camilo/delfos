@@ -17,13 +17,13 @@ export class DashboardService {
     this.billUrl = `${environment.apiUrl}/v1/bill`;
   }
 
-  lancamentosPorCategoria(): Promise<Array<any>> {
-    return firstValueFrom(this.http.get(`${this.billUrl}/user`))
+  lancamentosPorUsuarioMensal(userId: string): Promise<Array<any>> {
+    return firstValueFrom(this.http.get(`${this.billUrl}/statistics/by-user/${userId}`))
       .then((response : any) => response);
   }
 
-  lancamentosPorDia(): Promise<Array<any>> {
-    return firstValueFrom(this.http.get(`${this.billUrl}/statistics/by-day`))
+  lancamentosPorUsuarioPorDia(userId: string): Promise<Array<any>> {
+    return firstValueFrom(this.http.get(`${this.billUrl}/statistics/by-day/${userId}`))
       .then((response : any) => {
         const dados = response;
         this.converterStringsParaDatas(dados);

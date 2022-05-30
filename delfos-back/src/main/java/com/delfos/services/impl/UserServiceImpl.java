@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.delfos.enums.State;
 import com.delfos.model.User;
 import com.delfos.repository.UserRepository;
 
@@ -36,14 +37,46 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Page<User> findAll(UserSpec spec, Pageable pageable) {
+		System.out.println();
 		
-		return userRepository.findAll(spec, pageable);
+		Page<User> findPrint = userRepository.findAll(spec, pageable);
+		System.out.println(findPrint.getContent().toString());
+		
+		
+		findPrint.getContent().forEach(x -> {
+			System.out.println(x);
+		});
+		return findPrint;
 	}
 
 	@Override
 	public Optional<User> findByEmail(String email) {
 		Optional<User> user = userRepository.findByEmail(email);
 		return user;
+	}
+
+	@Override
+	public Optional<User> findByName(String name) {
+		Optional<User> user = userRepository.findByName(name);
+		return user;
+	}
+
+	@Override
+	public void updatePropertyActive(Long id, Boolean ativo) {
+		Optional<User> user = findById(id);
+		if (user.isPresent()) {
+			if(ativo) {
+				System.out.println("Ativando usuario");
+				user.get().setState(State.ATIVO);
+			}else {
+				System.out.println("Desativando usuario");
+				user.get().setState(State.DESATIVO);
+			}
+			
+			userRepository.save(user.get());
+			
+		}
+		
 	}
 	
 	

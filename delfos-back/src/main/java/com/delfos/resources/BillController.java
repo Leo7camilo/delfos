@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.delfos.exception.handler.DelfosExceptionHandler.Erro;
 import com.delfos.model.Bill;
 import com.delfos.model.BillStatiticsDay;
+import com.delfos.model.BillStatiticsUser;
 import com.delfos.model.User;
 import com.delfos.services.BillService;
 import com.delfos.services.UserService;
@@ -43,34 +44,29 @@ public class BillController {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@GetMapping("users/{userId}")
+	@GetMapping("/statistics/by-user/{userName}")
 	@PreAuthorize("hasAuthority('ROLE_SEARCH_BILL') and hasAuthority('SCOPE_write')")
-	public ResponseEntity<Bill> findById(@PathVariable Long userId) {
+	public List<BillStatiticsUser> findById(@PathVariable String userName) {
 		
+		Optional<User> user = userService.findByName(userName);
+		if(!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return billService.byUser(LocalDate.now(), user.get().getId());
+	}
+	
+
+	@PreAuthorize("hasAuthority('ROLE_SEARCH_BILL') and hasAuthority('SCOPE_write')")
+	@GetMapping("/statistics/by-day/{userName}")
+	public List<BillStatiticsDay> byDay(@PathVariable String userName) {
 		
-		Optional<User> user = userService.findById(userId);
+		Optional<User> user = userService.findByName(userName);
 		if(!user.isPresent()) {
 			throw new UserNotFoundException();
 		}
 		
-		Bill bill = new Bill();
 		
-		
-		bill.setDate(LocalDate.now(ZoneId.of("UTC")));
-		bill.setCashValue(new BigDecimal("123.45"));
-		bill.setKvwValue(104.2F);
-		
-		
-		
-		//Optional<User> categoria = billService.findById(userId);
-
-		return ResponseEntity.ok(bill);
-	}
-	
-	
-	@GetMapping("/statistics/by-day")
-	public List<BillStatiticsDay> byDay() {
-		return billService.byDay(LocalDate.now());
+		return billService.byDay(LocalDate.now(), user.get().getId());
 	}
 	
 	@ExceptionHandler({ UserNotFoundException.class })

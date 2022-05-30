@@ -2,7 +2,8 @@ package com.delfos.enums;
 
 public enum BillType {
 
-	DESPESA("Despesa");
+	DESPESA("Despesa"),
+	KVW("kvw");
 	
 	private final String description;
 	

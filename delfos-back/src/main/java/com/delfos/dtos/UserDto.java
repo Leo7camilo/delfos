@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import com.delfos.enums.State;
 import com.delfos.enums.UserType;
 import com.delfos.model.Document;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDto {
 	
@@ -33,6 +34,11 @@ public class UserDto {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private UserType type;
+	
+	
+	@NotNull
+	@Size(min = 5, max = 120)
+	private String password;
 
 
 	public String getName() {
@@ -84,6 +90,16 @@ public class UserDto {
 	public void setType(UserType type) {
 		this.type = type;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
 
 }
 

@@ -8,7 +8,8 @@ const routes: Routes = [
     { path: 'dashboard', loadChildren: () => import('../app/dashboard/dashboard.module').then(m => m.DashboardModule) },
     { path: 'bandeira', loadChildren: () => import('../app/bandeira/bandeira.module').then(m => m.BandeiraModule) },
     { path: 'dica', loadChildren: () => import('../app/dica/dica.module').then(m => m.DicaModule) },
-    //{ path: 'relatorios', loadChildren: () => import('../app/relatorios/relatorios.module').then(m => m.RelatoriosModule) },
+    { path: 'pessoas', loadChildren: () => import('../app/pessoas/pessoas.module').then(m => m.PessoasModule) },
+    { path: 'simulacoes', loadChildren: () => import('../app/simulacao/simulacoes.module').then(m => m.SimulacoesModule) },
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'nao-autorizado', component: NaoAutorizadoComponent },

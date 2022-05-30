@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MoneyHttpInterceptor } from './money-http-interceptor';
 import { environment } from 'src/environments/environment';
 import { AuthorizedComponent } from './authorized/authorized.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token')!;
@@ -43,7 +44,8 @@ export function tokenGetter(): string {
     }
   ],
   declarations: [
-    AuthorizedComponent
+    AuthorizedComponent,
+    LoginFormComponent
   ]
 })
 export class SegurancaModule { }

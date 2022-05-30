@@ -14,20 +14,24 @@ export class NavbarComponent implements OnInit {
   exibindoMenu: boolean = false;
   usuarioLogado: string = ''
 
+  showMenu = false;
+
   constructor(
     public auth: AuthService,
     private errorHandler: ErrorHandlerService,
     private router: Router) { }
 
   ngOnInit() {
-    this.usuarioLogado = this.auth.jwtPayload?.nome;
+    this.usuarioLogado = this.auth.jwtPayload?.name;
+    this.showMenu = true;
   }
-  
+
   temPermissao(permissao: string) {
     return this.auth.temPermissao(permissao);
   }
-  
+
   logout() {
     this.auth.logout();
+    this.showMenu = false;
   }
 }

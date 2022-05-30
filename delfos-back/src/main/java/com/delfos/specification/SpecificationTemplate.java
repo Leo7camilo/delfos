@@ -19,6 +19,9 @@ public class SpecificationTemplate {
 		@Spec(path = "email", spec = Like.class),
 	})
 	
+//	@And({
+//		@Spec(path = "value", spec = Like.class),
+//	})
 	public interface UserSpec extends Specification<User>{}
 	
 	

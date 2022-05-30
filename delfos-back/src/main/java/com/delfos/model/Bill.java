@@ -11,6 +11,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -49,8 +53,15 @@ public class Bill implements Serializable{
 	private BillType type;
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-	private User user;
+    //@ManyToMany(mappedBy = "bills")
+	
+	/*@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "bill_user", joinColumns = @JoinColumn(name = "bill_id")
+		, inverseJoinColumns = @JoinColumn(name = "id_user"))*/
+	
+	@ManyToOne
+    @JoinColumn(name = "user_id")
+	private User user_id;
 
 	public LocalDate getDate() {
 		return date;
@@ -83,13 +94,13 @@ public class Bill implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public User getUser() {
-		return user;
+	
+	public User getUser_id() {
+		return user_id;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser_id(User user_id) {
+		this.user_id = user_id;
 	}
 
 	@Override

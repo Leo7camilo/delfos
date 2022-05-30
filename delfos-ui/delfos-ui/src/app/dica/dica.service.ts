@@ -28,15 +28,24 @@ export class DicaService {
       .append('Authorization', 'Bearer ' + localStorage.getItem('token'))
   }
 
-  pesquisar(): Promise<any> {
+  pesquisar(filtro: DicaFiltro): Promise<any> {
     const headers = new HttpHeaders()
       .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return firstValueFrom(this.http.get(`${this.dicaUrl}`, { headers }))
+      let params = new HttpParams()
+          .set('page', filtro.pagina)
+          .set('size', filtro.itensPorPagina);
+
+    return firstValueFrom(this.http.get(`${this.dicaUrl}`, { headers, params }))
       .then((response : any) => {
-        const dica = response;
-        console.log(response);
-        return response;
+        const dicas = response['content'];
+
+        const resultado = {
+          dicas,
+          total: response['totalElements']
+        };
+
+        return resultado;
       });
   }
 

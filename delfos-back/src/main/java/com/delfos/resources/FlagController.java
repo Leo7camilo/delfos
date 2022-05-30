@@ -47,6 +47,11 @@ public class FlagController {
 		return new ResponseEntity<Flag>(flags.get(rand.nextInt(flags.size())), HttpStatus.OK);	
 	}
 	
+	@GetMapping("/list")
+	public ResponseEntity<List<Flag>> findAllFlagsList() {
+		return new ResponseEntity<List<Flag>>(flagService.findAll(), HttpStatus.OK);	
+	}
+	
 	
 	
 	@ExceptionHandler({ UserNotFoundException.class })

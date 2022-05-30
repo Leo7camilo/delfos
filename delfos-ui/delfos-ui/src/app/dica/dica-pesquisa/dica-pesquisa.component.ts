@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
-import { DicaService } from '../dica.service';
+import { DicaFiltro, DicaService } from '../dica.service';
 
 @Component({
   selector: 'app-dica-pesquisa',
@@ -9,7 +9,9 @@ import { DicaService } from '../dica.service';
 })
 export class DicaPesquisaComponent implements OnInit {
 
-  dicaData: any;
+  dicaData: any = null;
+
+  filtro = new DicaFiltro();
 
   events1: any[] = [];
   events2: any[] = [];
@@ -21,21 +23,22 @@ export class DicaPesquisaComponent implements OnInit {
   ngOnInit(): void {
 
     this.events1 = [
-      {status: 'Ordered', date: '15/10/2020 10:30', icon: PrimeIcons.SHOPPING_CART, color: '#9C27B0', image: 'game-controller.jpg'},
-      {status: 'Processing', date: '15/10/2020 14:00', icon: PrimeIcons.COG, color: '#673AB7'},
-      {status: 'Shipped', date: '15/10/2020 16:15', icon: PrimeIcons.ENVELOPE, color: '#FF9800'},
-      {status: 'Delivered', date: '16/10/2020 10:00', icon: PrimeIcons.CHECK, color: '#607D8B'}
+      {status: 'Banhos fora do horário de pico', date: '15/10/2020 10:30', icon: PrimeIcons.CLOCK, color: '#9C27B0', image: 'C:\\GitParticular\\workspace_projetosSistema\\delfos\\delfos-ui\\delfos-ui\\src\\imagens\\usercard.png'},
+      {status: 'Desligar equipamentos', date: '15/10/2020 14:00', icon: PrimeIcons.POWER_OFF, color: '#673AB7'},
+      {status: 'Chuveiros Eletrônicos', date: '15/10/2020 16:15', icon: PrimeIcons.CHECK_SQUARE, color: '#FF9800'},
+      {status: 'Troque Suas Lâmpadas', date: '16/10/2020 10:00', icon: PrimeIcons.CHECK, color: '#607D8B'}
   ];
 
   this.events2 = [
       "2020", "2021", "2022", "2023"
   ];
 
-    this.pesquisarBandeira();
+    this.pesquisarDicas();
   }
 
-  pesquisarBandeira(){
-    this.dicaService.pesquisar()
+  pesquisarDicas(pagina: number = 0){
+    this.filtro.pagina = pagina;
+    this.dicaService.pesquisar(this.filtro)
       .then(dados => {
         console.log("Olaaaa "+ JSON.stringify(dados));
         this.dicaData = dados;

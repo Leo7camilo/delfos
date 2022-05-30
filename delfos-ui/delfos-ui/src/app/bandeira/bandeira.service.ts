@@ -41,8 +41,25 @@ export class BanderiaService {
         console.log(bandeira);
 
         const resultado = {
-          bandeira,
+          bandeira: bandeira,
           total: 1
+        };
+
+        return resultado;
+      });
+  }
+
+  pesquisarTodas(): Promise<any> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return firstValueFrom(this.http.get(`${this.bandeiraUrl}/list`, { headers }))
+      .then((response : any) => {
+        const bandeira = response;
+
+        const resultado = {
+          bandeira: bandeira,
+          total: 4
         };
 
         return resultado;

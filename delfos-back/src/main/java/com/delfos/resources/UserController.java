@@ -17,12 +17,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delfos.model.User;
@@ -61,15 +65,25 @@ public class UserController {
 		BeanUtils.copyProperties(userDto, user);
 		user.setCreationDate(LocalDate.now());
 		user.setUpdatedDate(LocalDate.now());
+		user.setPassword(BCryptPasswordEncoder(user.getPassword()));
 		User userCreated = userService.createUser(user);
 		return new ResponseEntity<User>(userCreated, HttpStatus.CREATED);
 	}
+
+	
 
 	@GetMapping("/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		Optional<User> categoria = userService.findById(id);
 
 		return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
+	}
+	
+	@PutMapping("/{id}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority('ROLE_DISABLE_USER') and hasAuthority('SCOPE_write')")
+	public void atualizarPropriedadeAtivo(@PathVariable Long id, @RequestBody Boolean ativo) {
+		userService.updatePropertyActive(id, ativo);
 	}
 	
 	@GetMapping
@@ -80,6 +94,13 @@ public class UserController {
 		return ResponseEntity.ok(userService.findAll(spec, pageable));
 	}
 	
+	private String BCryptPasswordEncoder(String password) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println(encoder.encode(password));
+		
+		return encoder.encode(password);
+		
+	}
 	
 	@ExceptionHandler({ CepInvalidoException.class })
 	public ResponseEntity<Object> handleCepInvalidoException(CepInvalidoException ex) {
