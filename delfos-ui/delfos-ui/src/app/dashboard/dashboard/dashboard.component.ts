@@ -78,19 +78,19 @@ export class DashboardComponent implements OnInit {
         const totaisReceitas = this.totaisPorCadaDiaMes(
           dados.filter(dado => dado.type === 'DESPESA'), diasDoMes);
         const totaisDespesas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.type === 'DESPESA'), diasDoMes);
+          dados.filter(dado => dado.type === 'KVW'), diasDoMes);
 
 
         this.lineChartData = {
           labels: diasDoMes,
           datasets: [
             {
-              label: 'Receitas',
+              label: 'Em reais',
               data: totaisReceitas,
               borderColor: '#3366CC'
             },
             {
-              label: 'Despesas',
+              label: 'Kvw',
               data: totaisDespesas,
               borderColor: '#D62B00'
             }
