@@ -32,7 +32,7 @@ export class AuthorizedComponent implements OnInit {
   }*/
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params:any) => {
+    /*this.activatedRoute.queryParams.subscribe((params:any) => {
       if (params.code) {
         this.auth.obterNovoAccessTokenComCode(params.code, params.state)
           .then(()=> {
@@ -45,7 +45,7 @@ export class AuthorizedComponent implements OnInit {
       } else {
         this.route.navigate(['/']);
       }
-    });
+    });*/
   }
 
 }

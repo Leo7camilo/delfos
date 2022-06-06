@@ -25,23 +25,14 @@ public class DelfosApiProperty {
 	
 	public static class Seguranca {
 
-		private List<String> redirectsPermitidos;
-		private String authServerUrl;
+		private boolean enableHttps;
 
-		public List<String> getRedirectsPermitidos() {
-			return redirectsPermitidos;
+		public boolean isEnableHttps() {
+			return enableHttps;
 		}
 
-		public void setRedirectsPermitidos(List<String> redirectsPermitidos) {
-			this.redirectsPermitidos = redirectsPermitidos;
-		}
-
-		public String getAuthServerUrl() {
-			return authServerUrl;
-		}
-
-		public void setAuthServerUrl(String authServerUrl) {
-			this.authServerUrl = authServerUrl;
+		public void setEnableHttps(boolean enableHttps) {
+			this.enableHttps = enableHttps;
 		}
 	}
 

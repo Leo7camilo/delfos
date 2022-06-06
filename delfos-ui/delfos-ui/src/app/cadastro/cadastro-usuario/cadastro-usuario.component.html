@@ -1,33 +1,50 @@
-<div class="container" style="max-width: 400px; margin: auto">
+<div class="container" style="max-width: 800px; margin: auto">
 
-  <form autocomplete="off" #f="ngForm">
+  <form autocomplete="off" #cadastroForm="ngForm">
     <div class="ui-g ui-fluid">
 
-      <div class="ui-g-12">
-        <h1>Login</h1>
+      <div class="p-grid">
+        <div class="col-12">
+          <h1>Cadastrar Usuário</h1>
+        </div>
+
+        <br>
+
+        <div class="p-col-12 p-fluid">
+
+          <label>Nome</label>
+          <input pInputText type="text" name="name" placeholder="Nome" ngModel required #name>
+        </div>
+
+        <br>
+
+        <div class="p-col-10 p-md-5 p-fluid">
+          <label>Email</label>
+          <input pInputText type="email" name="email" placeholder="E-mail" ngModel required #email>
+        </div>
+
+        <br>
+
+        <div class="p-col-6 p-md-3 p-fluid">
+          <label>Cep</label>
+          <input pInputText type="text" name="cep" placeholder="Cep" ngModel required #cep>
+        </div>
+
+        <br>
+
+        <div class="p-col-6 p-md-3 p-fluid">
+          <label>Senha</label>
+          <input pInputText type="password" name="password" placeholder="Senha" ngModel required #password>
+        </div>
+
+        <br>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Cadastrar" [disabled]="!cadastroForm.valid"
+            (click)="cadastrar(cadastroForm); password.value = '';"></button>
+        </div>
+
       </div>
-
-      <br>
-
-      <div class="ui-g-12">
-        <input pInputText type="email" name="usuario" placeholder="E-mail"
-          ngModel required #usuario>
-      </div>
-
-      <br>
-
-      <div class="ui-g-12">
-        <input pInputText type="password" name="senha" placeholder="Senha"
-          ngModel required #senha>
-      </div>
-
-      <br>
-
-     <!-- <div class="ui-g-12">
-        <button pButton type="submit" label="Login" [disabled]="!f.valid"
-          (click)="login(usuario.value, senha.value); senha.value = '';"></button>
-      </div> -->
-
     </div>
   </form>
 

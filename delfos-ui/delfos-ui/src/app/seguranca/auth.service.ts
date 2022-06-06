@@ -10,13 +10,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class AuthService {
 
-  oauthUrlLogin = environment.apiUrl + '/login';
-
-  oauthTokenUrl = environment.apiUrl + '/oauth2/token';
-  oauthAuthorizeUrl = environment.apiUrl + '/oauth2/authorize'
+  oauthTokenUrl = 'http://localhost:8080/oauth/token';
   jwtPayload: any ;
-
-
 
   constructor(
     private http: HttpClient,
@@ -25,32 +20,21 @@ export class AuthService {
     this.carregarToken();
   }
 
-  login1(usuario: string, senha: string): Promise<void> {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+  login(usuario: string, senha: string): Promise<void> {
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
-    //this.login();
+    const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    const body2 = {
-      username: usuario,
-      password: senha,
-    }
-
-    //const body = `username=${usuario}&password=${senha}&grant_type=password`;
-    const body = `username=${usuario}&password=${senha}`;
-
-    return this.http.post(this.oauthUrlLogin, body,
-        { headers, withCredentials: true })
+    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true  })
       .toPromise()
-      .then((response : any) => {
+      .then((response:any) => {
         this.armazenarToken(response['access_token']);
       })
       .catch(response => {
         if (response.status === 400) {
-          const responseJson = response.json();
-
-          if (responseJson.error === 'invalid_grant') {
+          if (response.error === 'invalid_grant') {
             return Promise.reject('Usuário ou senha inválida!');
           }
         }
@@ -59,7 +43,7 @@ export class AuthService {
       });
   }
 
-  login() {
+  /*login() {
     const state = this.gerarStringAleatoria(40);
     const codeVerifier = this.gerarStringAleatoria(128);
 
@@ -96,7 +80,7 @@ export class AuthService {
     this.limparAccessToken();
     localStorage.clear();
     window.location.href = environment.apiUrl + '/logout?returnTo=' + environment.logoutRedirectToUrl;
-  }
+  }*/
 
   /*obterNovoAccessTokenComCode(code: string, state: string) : Promise<any>{
     const stateSalvo = localStorage.getItem('state');
@@ -174,19 +158,19 @@ export class AuthService {
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
-    const payload = new HttpParams()
-      .append('grant_type', 'refresh_token')
-      .append('refresh_token', localStorage.getItem('refreshToken')!)
+    const body = 'grant_type=refresh_token';
 
-    return firstValueFrom(this.http.post<any>(this.oauthTokenUrl, payload, { headers }))
+    return this.http.post<any>(this.oauthTokenUrl, body,
+        { headers, withCredentials: true })
+      .toPromise()
       .then((response:any) => {
         this.armazenarToken(response['access_token']);
-        this.armazenarRefreshToken(response['refresh_token'])
+
         console.log('Novo access token criado!');
 
         return Promise.resolve();
       })
-      .catch((response:any) => {
+      .catch(response => {
         console.error('Erro ao renovar token.', response);
         return Promise.resolve();
       });

@@ -1,34 +1,33 @@
 <div class="container" style="max-width: 400px; margin: auto">
 
-  <form autocomplete="off" #f="ngForm">
+  <form autocomplete="off" #loginForm="ngForm">
     <div class="ui-g ui-fluid">
 
       <div class="ui-g-12">
         <h1>Login</h1>
       </div>
 
-    <br>
+      <br>
 
       <div class="ui-g-12">
-        <input pInputText type="email" name="username" placeholder="E-mail"
-          ngModel required #username>
+        <input pInputText type="email" name="usuario" placeholder="E-mail" ngModel required #usuario>
       </div>
 
-    <br>
+      <br>
 
       <div class="ui-g-12">
-        <input pInputText type="password" name="password" placeholder="Senha"
-          ngModel required #password>
+        <input pInputText type="password" name="senha" placeholder="Senha" ngModel required #senha>
       </div>
 
-    <br>
+      <br>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Login" [disabled]="!f.valid"
-          (click)="login(username.value, password.value); password.value = '';"></button>
+        <button pButton type="submit" label="Login" [disabled]="!loginForm.valid"
+          (click)="login(usuario.value, senha.value); senha.value = '';"></button>
 
-          <button pButton type="submit" label="Cadastrar"
-          [routerLink]="['/cadastrar']"></button>
+
+        <a routerLink="/cadastrar">Cadastrar</a>
+        <!-- <button pButton label="Cadastrar" routerLink="/cadastrar"></button> -->
       </div>
 
     </div>

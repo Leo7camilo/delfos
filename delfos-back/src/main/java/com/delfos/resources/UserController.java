@@ -116,8 +116,6 @@ public class UserController {
 	
 	private String BCryptPasswordEncoder(String password) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode(password));
-		
 		return encoder.encode(password);
 		
 	}

@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-  
+
   constructor(
     private auth: AuthService,
     private router: Router
@@ -24,10 +24,10 @@ export class AuthGuard implements CanActivate {
         return this.auth.obterNovoAccessToken()
           .then(() => {
             if (this.auth.isAccessTokenInvalido()) {
-              this.auth.login();
+              this.router.navigate(['/login']);
               return false;
             }
-  
+
             return true;
           });
       } else if (next.data.roles && !this.auth.temQualquerPermissao(next.data.roles)) {
@@ -38,5 +38,5 @@ export class AuthGuard implements CanActivate {
       return true;
 
   }
-  
+
 }

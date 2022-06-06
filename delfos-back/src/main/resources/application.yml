@@ -28,8 +28,8 @@ api:
     cep: https://viacep.com.br/ws/
     
     
-delfos:
-  seguranca:
-    redirects-permitidos: http://local-delfos.com:8000/authorized, https://oidcdebugger.com/debug
-    auth-server-url: http://localhost:8080
-  origin-permitida: http://local-delfos.com:8000
+#delfos:
+#  seguranca:
+#    redirects-permitidos: http://local-delfos.com:8000/authorized, https://oidcdebugger.com/debug
+#    auth-server-url: http://localhost:8080
+#  origin-permitida: http://local-delfos.com:8000

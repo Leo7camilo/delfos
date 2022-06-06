@@ -17,7 +17,7 @@ export class LoginFormComponent {
   ) { }
 
   login(usuario: string, senha: string) {
-    this.auth.login1(usuario, senha)
+    this.auth.login(usuario, senha)
       .then(() => {
         this.router.navigate(['/dashboard']);
       })
