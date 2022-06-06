@@ -26,8 +26,12 @@ export class SimulacaoComponent implements OnInit {
   selectedEquipamentos: Equipamentos | undefined;
   mostraCard: boolean = false;
 
-  bandeiras: Bandeira[];
-  selectedBandeiras: Bandeira;
+  bandeiras: Bandeira[] = [];
+  selectedBandeiras: Bandeira | undefined;
+
+
+  bandeiraSelecionada?: number;
+  mensagem: string = '';
 
 
   usuarioLogado: string = ''
@@ -41,14 +45,6 @@ export class SimulacaoComponent implements OnInit {
       { nome: 'Geladeira', watts: 250 },
     ];
 
-    this.bandeiras = [];
-    let bandeira: Bandeira = {
-      id: 0,
-      type: '',
-      description: ''
-    }
-    this.selectedBandeiras = bandeira;
-
   }
 
   ngOnInit(): void {
@@ -56,15 +52,32 @@ export class SimulacaoComponent implements OnInit {
     this.pesquisarBandeira();
   }
 
-  pesquisar() {
+  pesquisar(minutos: string, equipamento: number, bandeira: string) {
+    this.mensagem = '';
     this.mostraCard = true;
+    let result = equipamento / 1000;
+
+    if (parseInt(bandeira) == 1) {
+      this.mensagem = 'O valor da simulação na Bandeira Verde ficou em aproximadamente: R$' + Math.round(((0.59266 * result) / 60) * parseInt(minutos));
+    }else if (parseInt(bandeira) == 2) {
+      let acrescimo = (result * 0.01874);
+      this.mensagem = 'O valor da simulação na Bandeira Amarela ficou em aproximadamente: R$' + Math.round(acrescimo + (((0.59266 * result) / 60) * parseInt(minutos)));
+    }else if (parseInt(bandeira) == 3) {
+      let acrescimo = (result * 0.03971);
+      this.mensagem = 'O valor da simulação na Bandeira Vermelha I ficou em aproximadamente: R$' + Math.round(acrescimo + (((0.59266 * result) / 60) * parseInt(minutos)));
+    } else if (parseInt(bandeira) == 4) {
+      let acrescimo = (result * 0.09492);
+      this.mensagem = 'O valor da simulação na Bandeira Vermelha II ficou em aproximadamente: R$' + Math.round(acrescimo + (((0.59266 * result) / 60) * parseInt(minutos)));
+    }
 
   }
 
   pesquisarBandeira() {
     this.banderiaService.pesquisarTodas()
-      .then(dados => {
-        this.bandeiras = dados;
+      .then((dados: any) => {
+        this.bandeiraSelecionada = 1;
+        this.bandeiras = dados.bandeira.map((dado: any) => ({ label: dado.type, value: dado.id }));
+
       });
   }
 }

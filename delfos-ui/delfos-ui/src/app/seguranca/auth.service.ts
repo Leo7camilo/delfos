@@ -30,12 +30,15 @@ export class AuthService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
+    //this.login();
+
     const body2 = {
       username: usuario,
       password: senha,
     }
 
-    const body = `username=${usuario}&password=${senha}&grant_type=password`;
+    //const body = `username=${usuario}&password=${senha}&grant_type=password`;
+    const body = `username=${usuario}&password=${senha}`;
 
     return this.http.post(this.oauthUrlLogin, body,
         { headers, withCredentials: true })

@@ -10,22 +10,25 @@
     <br>
 
       <div class="ui-g-12">
-        <input pInputText type="email" name="usuario" placeholder="E-mail"
-          ngModel required #usuario>
+        <input pInputText type="email" name="username" placeholder="E-mail"
+          ngModel required #username>
       </div>
 
     <br>
 
       <div class="ui-g-12">
-        <input pInputText type="password" name="senha" placeholder="Senha"
-          ngModel required #senha>
+        <input pInputText type="password" name="password" placeholder="Senha"
+          ngModel required #password>
       </div>
 
     <br>
 
       <div class="ui-g-12">
         <button pButton type="submit" label="Login" [disabled]="!f.valid"
-          (click)="login(usuario.value, senha.value); senha.value = '';"></button>
+          (click)="login(username.value, password.value); password.value = '';"></button>
+
+          <button pButton type="submit" label="Cadastrar"
+          [routerLink]="['/cadastrar']"></button>
       </div>
 
     </div>

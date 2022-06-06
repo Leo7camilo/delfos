@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.delfos.model.User;
 import com.delfos.services.CepService;
+import com.delfos.services.UserPermissionInterface;
 import com.delfos.services.UserService;
 import com.delfos.services.exception.CepInvalidoException;
+import com.delfos.services.exception.UserNotFoundException;
 import com.delfos.specification.SpecificationTemplate;
 
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 
 import com.delfos.dtos.UserDto;
 import com.delfos.exception.handler.DelfosExceptionHandler.Erro;
@@ -51,6 +53,9 @@ public class UserController {
 	CepService cepService;
 	
 	@Autowired
+	UserPermissionInterface userPermission;
+	
+	@Autowired
 	private MessageSource messageSource;
 
 	@PostMapping
@@ -61,12 +66,14 @@ public class UserController {
 		}
 		
 		User user = new User();
-		
 		BeanUtils.copyProperties(userDto, user);
 		user.setCreationDate(LocalDate.now());
 		user.setUpdatedDate(LocalDate.now());
 		user.setPassword(BCryptPasswordEncoder(user.getPassword()));
 		User userCreated = userService.createUser(user);
+		
+		userPermission.setPermissionToUser(userCreated.getId(), 1);
+		
 		return new ResponseEntity<User>(userCreated, HttpStatus.CREATED);
 	}
 
@@ -92,6 +99,19 @@ public class UserController {
 												direction = Sort.Direction.ASC) Pageable pageable) {
 
 		return ResponseEntity.ok(userService.findAll(spec, pageable));
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable Long id) {
+		
+		Optional<User> user = userService.findById(id);
+		
+		if(!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		
+		userService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	private String BCryptPasswordEncoder(String password) {

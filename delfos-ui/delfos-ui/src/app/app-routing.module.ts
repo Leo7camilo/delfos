@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: 'dica', loadChildren: () => import('../app/dica/dica.module').then(m => m.DicaModule) },
     { path: 'pessoas', loadChildren: () => import('../app/pessoas/pessoas.module').then(m => m.PessoasModule) },
     { path: 'simulacoes', loadChildren: () => import('../app/simulacao/simulacoes.module').then(m => m.SimulacoesModule) },
+    { path: 'cadastrar', loadChildren: () => import('../app/cadastro/cadastro.module').then(m => m.CadastroModule) },
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'nao-autorizado', component: NaoAutorizadoComponent },

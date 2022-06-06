@@ -47,6 +47,7 @@ import java.util.UUID;
 
 @Configuration
 @Profile("oauth-security")
+
 public class AuthServerConfig {
 
     @Autowired

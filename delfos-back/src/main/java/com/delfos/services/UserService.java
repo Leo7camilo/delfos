@@ -21,5 +21,7 @@ public interface UserService {
 	Optional<User> findByName(String userName);
 
 	void updatePropertyActive(Long codigo, Boolean ativo);
+	
+	void deleteById(Long idUser);
 
 }

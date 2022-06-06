@@ -27,7 +27,7 @@ export function tokenGetter(): string {
         tokenGetter,
         allowedDomains: environment.tokenAllowedDomains,
         disallowedRoutes: environment.tokenDisallowedRoutes
-      }       
+      }
     }),
 
     InputTextModule,
