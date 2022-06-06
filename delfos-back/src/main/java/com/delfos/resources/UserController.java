@@ -35,6 +35,7 @@ import com.delfos.services.CepService;
 import com.delfos.services.UserPermissionInterface;
 import com.delfos.services.UserService;
 import com.delfos.services.exception.CepInvalidoException;
+import com.delfos.services.exception.EmailInvalidoException;
 import com.delfos.services.exception.UserNotFoundException;
 import com.delfos.specification.SpecificationTemplate;
 
@@ -63,6 +64,10 @@ public class UserController {
 
 		if (!cepService.findCep(userDto.getCep())) {
 			throw new CepInvalidoException();
+		}
+		
+		if (userService.findByEmail(userDto.getEmail()).isPresent()) {
+			throw new EmailInvalidoException();
 		}
 		
 		User user = new User();
@@ -123,6 +128,14 @@ public class UserController {
 	@ExceptionHandler({ CepInvalidoException.class })
 	public ResponseEntity<Object> handleCepInvalidoException(CepInvalidoException ex) {
 		String mensagemUsuario = messageSource.getMessage("cep.invalido", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return ResponseEntity.badRequest().body(erros);
+	}
+	
+	@ExceptionHandler({ EmailInvalidoException.class })
+	public ResponseEntity<Object> handleCepInvalidoException(EmailInvalidoException ex) {
+		String mensagemUsuario = messageSource.getMessage("email.invalido", null, LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return ResponseEntity.badRequest().body(erros);

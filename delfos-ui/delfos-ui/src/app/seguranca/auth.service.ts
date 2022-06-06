@@ -13,13 +13,14 @@ export class AuthService {
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
   jwtPayload: any ;
 
+  apiUrlUser = environment.apiUrl+'/v1/user'
+
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
     this.carregarToken();
   }
-
   login(usuario: string, senha: string): Promise<void> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')

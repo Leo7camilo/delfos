@@ -2,6 +2,7 @@ package com.delfos.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,9 +11,11 @@ import javax.validation.constraints.Size;
 public class Document {
 
 	@NotNull
+	@NotBlank
 	private int documentType;
 	
 	@NotNull
+	@NotBlank
     @Size(min = 11, max = 14)
 	@Column(name = "document_number")
 	private String documentNumber;

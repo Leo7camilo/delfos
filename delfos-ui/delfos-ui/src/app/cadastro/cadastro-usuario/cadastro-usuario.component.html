@@ -25,6 +25,13 @@
 
         <br>
 
+        <div class="p-col-10 p-md-5 p-fluid">
+          <label>CPF</label>
+          <input pInputText type="text" name="cpf" placeholder="CPF" ngModel required #cpf>
+        </div>
+
+        <br>
+
         <div class="p-col-6 p-md-3 p-fluid">
           <label>Cep</label>
           <input pInputText type="text" name="cep" placeholder="Cep" ngModel required #cep>
@@ -41,7 +48,9 @@
 
         <div class="ui-g-12">
           <button pButton type="submit" label="Cadastrar" [disabled]="!cadastroForm.valid"
-            (click)="cadastrar(cadastroForm); password.value = '';"></button>
+            (click)="cadastrar(name.value, cpf.value, email.value, cep.value, password.value); password.value = '';"></button>
+
+            <a routerLink="/login">Voltar</a>
         </div>
 
       </div>

@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,6 +50,7 @@ public class User implements Serializable {
 	private long id;
 	
 	@NotNull
+	@NotBlank
     @Size(min = 5, max = 50)
 	private String name;
 	
@@ -58,9 +60,11 @@ public class User implements Serializable {
 	private String password;
 
 	@Email
+	@NotBlank
 	private String email;
 	
 	@NotNull
+	@NotBlank
     @Size(min = 8, max = 8)
 	private String cep;
 	

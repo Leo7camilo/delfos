@@ -1,8 +1,8 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { AuthService } from 'src/app/seguranca/auth.service';
+import { AuthCadastroService } from '../cadastrar.service';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -12,17 +12,19 @@ import { AuthService } from 'src/app/seguranca/auth.service';
 export class CadastroUsuarioComponent implements OnInit {
 
   constructor(
-    private auth: AuthService,
+    private auth: AuthCadastroService,
     private errorHandler: ErrorHandlerService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
   }
 
-  cadastrar(usuario: any) {
-    this.auth.login("usuario", "senha")
+  cadastrar(name: any, cpf: any, email: any, cep: any, password: any) {
+    this.auth.cadastrar(name, cpf, email, cep, password)
       .then(() => {
+        this.messageService.add({ severity:'success', detail: 'Usuario criado com sucesso' });
         this.router.navigate(['/login']);
       })
       .catch(erro => {
