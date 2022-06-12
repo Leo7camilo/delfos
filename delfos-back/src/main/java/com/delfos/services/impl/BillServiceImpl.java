@@ -81,11 +81,8 @@ public class BillServiceImpl implements BillService {
 				root.get(Bill_.type),
 				root.get(Bill_.date),
 				root.get(Bill_.kvwValue),
-				root.get(Bill_.cashValue)));
-				//criteriaBuilder.sum(root.get(Bill_.kvwValue)),
-				//criteriaBuilder.sum(root.get(Bill_.cashValue))));
+				root.get(Bill_.cashValue)));;
 		
-
 		LocalDate primeiroDia = monthReference.withDayOfMonth(1);
 		LocalDate ultimoDia = monthReference.withDayOfMonth(monthReference.lengthOfMonth());
 
@@ -105,12 +102,12 @@ public class BillServiceImpl implements BillService {
 		
 		typedQuery.getResultList().forEach(billUser -> {
 			
-			if(billUser.getType().equals(BillType.DESPESA)) {
+			if(billUser.getType().equals(BillType.ENERGIA)) {
 				System.out.println(billUser);
 				totalCashConta = totalCashConta.add(billUser.getCashValue());
 				totalKvw += billUser.getKvwValue();
 			}
-			else if(billUser.getType().equals(BillType.KVW)) {
+			else if(billUser.getType().equals(BillType.KWH)) {
 				System.out.println(billUser);
 				totalCashKwv = totalCashKwv.add(billUser.getCashValue());
 				totalKvw += billUser.getKvwValue();
@@ -119,12 +116,12 @@ public class BillServiceImpl implements BillService {
 			
 			
 		});
-		billUserTotalConta.setType(BillType.DESPESA);
+		billUserTotalConta.setType(BillType.ENERGIA);
 		billUserTotalConta.setDate(LocalDate.now());
 		billUserTotalConta.setCashValue(totalCashConta);
 		billUserTotalConta.setKvwValue(totalKvw);
 		
-		billUserTotalKvw.setType(BillType.KVW);
+		billUserTotalKvw.setType(BillType.KWH);
 		billUserTotalKvw.setDate(LocalDate.now());
 		billUserTotalKvw.setCashValue(totalCashKwv);
 		billUserTotalKvw.setKvwValue(totalKvw);

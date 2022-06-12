@@ -51,7 +51,8 @@ width: 115px;
 }
 
 button.p-button {
-margin: 0 2px;
+  margin: 0 2px;
+  background-color: #000000;
 }
 
 @media (min-width: 40em) {
@@ -83,7 +84,7 @@ margin: 0 2px;
 }
 
 a {
-color: #337ab7;
+color: #7c33b7;
 text-decoration: none;
 }
 

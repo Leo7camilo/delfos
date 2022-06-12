@@ -1,9 +1,7 @@
 package com.delfos.resources;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,15 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delfos.exception.handler.DelfosExceptionHandler.Erro;
-import com.delfos.model.Bill;
 import com.delfos.model.BillStatiticsDay;
 import com.delfos.model.BillStatiticsUser;
 import com.delfos.model.User;
 import com.delfos.services.BillService;
 import com.delfos.services.UserService;
-import com.delfos.services.exception.CepInvalidoException;
 import com.delfos.services.exception.UserNotFoundException;
-import com.delfos.services.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("/${api.version}/bill")

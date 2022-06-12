@@ -21,7 +21,6 @@ export class MoneyHttpInterceptor implements HttpInterceptor {
             if (this.auth.isAccessTokenInvalido()) {
               throw new NotAuthenticatedError();
             }
-
             req = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Cidade, Estado, Pessoa } from '../core/model';
 import { firstValueFrom } from 'rxjs';
 
 export class PessoaFiltro {
@@ -15,16 +14,9 @@ export class PessoaFiltro {
 })
 export class PessoaService {
   pessoasUrl: string;
- // cidadesUrl: string;
-  //estadosUrl: string;
 
   constructor(private http: HttpClient) {
-    //this.pessoasUrl = `${environment.apiUrl}/pessoas`;
-
     this.pessoasUrl = `${environment.apiUrl}/v1/user`;
-
-   // this.estadosUrl = `${environment.apiUrl}/estados`;
-   // this.cidadesUrl = `${environment.apiUrl}/cidades`;
   }
 
   pesquisar(filtro: PessoaFiltro) : Promise<any> {
@@ -64,58 +56,4 @@ export class PessoaService {
       )
       .then((response: any) => response['content']);
   }
-
-  excluir(codigo: number) : Promise<void> {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return firstValueFrom(this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, { headers }));
-  }
-
-  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
-    return firstValueFrom(this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, ativo, { headers }));
-  }
-
-  adicionar(pessoa: Pessoa): Promise<Pessoa> {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
-    return firstValueFrom(this.http.post<Pessoa>(this.pessoasUrl, pessoa, { headers }));
-  }
-
-  atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
-    return firstValueFrom(this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, { headers }));
-  }
-
-  buscarPorCodigo(codigo: number): Promise<Pessoa> {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return firstValueFrom(this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`, { headers }));
-  }
-
-  /*listarEstados(): Promise<Estado[]> {
-    return firstValueFrom(
-      this.http.get<Estado[]>(this.estadosUrl)
-    );
-  }*/
-
-  /*pesquisarCidades(estadoId: number): Promise<Cidade[]> {
-    const params = new HttpParams()
-      .set('estado', estadoId);
-
-    return firstValueFrom(
-      this.http.get<Cidade[]>(this.cidadesUrl, { params })
-    );
-  }*/
-
 }

@@ -1,6 +1,6 @@
 .navbar {
     padding: 20px 0 10px;
-    background-color: #1e94d2;
+    background-color: #060208;
 }
 
 .navbar-toggle {
@@ -47,4 +47,8 @@
 
 .navbar-menuitem.ativo {
     background-color: #494541;
+}
+
+.navbar-span {
+  justify-items: center;
 }

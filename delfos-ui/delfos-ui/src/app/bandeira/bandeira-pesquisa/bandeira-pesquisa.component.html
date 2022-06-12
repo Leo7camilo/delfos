@@ -1,8 +1,15 @@
 <div class="container">
   <div class="grid">
+
     <div class="col-12">
       <h1>Consultar Bandeira</h1>
     </div>
+
+    <div class="col-12">
+      <h2>O estado atual da <span>bandeira energética</span> é: </h2>
+    </div>
+
+
 
     <div *ngIf="bandeiraData">
       <p-card header={{bandeiraData.bandeira.type}} [style]="{width: '360px'}" styleClass="p-card-shadow">

@@ -10,7 +10,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class AuthService {
 
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  oauthTokenUrl = environment.apiUrl+'/oauth/token'
   jwtPayload: any ;
 
   apiUrlUser = environment.apiUrl+'/v1/user'

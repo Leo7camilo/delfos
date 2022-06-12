@@ -23,7 +23,7 @@ export class DicaPesquisaComponent implements OnInit {
   ngOnInit(): void {
 
     this.events1 = [
-      {status: 'Banhos fora do horário de pico', date: '15/10/2020 10:30', icon: PrimeIcons.CLOCK, color: '#9C27B0', image: 'C:\\GitParticular\\workspace_projetosSistema\\delfos\\delfos-ui\\delfos-ui\\src\\imagens\\usercard.png'},
+      {status: 'Banhos fora do horário de pico', date: '15/10/2020 10:30', icon: PrimeIcons.CLOCK, color: '#9C27B0'},
       {status: 'Desligar equipamentos', date: '15/10/2020 14:00', icon: PrimeIcons.POWER_OFF, color: '#673AB7'},
       {status: 'Chuveiros Eletrônicos', date: '15/10/2020 16:15', icon: PrimeIcons.CHECK_SQUARE, color: '#FF9800'},
       {status: 'Troque Suas Lâmpadas', date: '16/10/2020 10:00', icon: PrimeIcons.CHECK, color: '#607D8B'}

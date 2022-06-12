@@ -9,6 +9,5 @@ export const environment = {
   tokenDisallowedRoutes: [/\/oauth2\/token/],
   oauthCallbackUrl: 'http://local-delfos.com:8000/authorized',
   logoutRedirectToUrl: 'http://local-delfos.com:8000',
-  apiUrlToken: ['http://localhost:8080/oauth/token']
 };
 

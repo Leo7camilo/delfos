@@ -51,19 +51,12 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.lancamentosPorUsuarioMensal(this.usuarioLogado)
       .then(dados => {
 
-        //this.billStaticsUser = dados;
-
-        console.log("Olaaaa "+ JSON.stringify(dados));
-        //let typeLabel = dados['type'];
-        //let dataSets = dados['cashValue'];
-
         this.pieChartData = {
           labels: dados.map(dado => dado.type),
-          //labels: this.billStaticsUser.type,
           datasets: [
             {
               data: dados.map(dado => dado.cashValue),
-              backgroundColor: ['#FF9900', '#109618', '#990099', '#3B3EAC', '#0099C6',
+              backgroundColor: ['#060208', '#605e61', '#990099', '#3B3EAC', '#0099C6',
                                   '#DD4477', '#3366CC', '#DC3912']
             }
           ]
@@ -76,9 +69,9 @@ export class DashboardComponent implements OnInit {
       .then(dados => {
         const diasDoMes = this.configurarDiasMes();
         const totaisReceitas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.type === 'DESPESA'), diasDoMes);
+          dados.filter(dado => dado.type === 'ENERGIA'), diasDoMes);
         const totaisDespesas = this.totaisPorCadaDiaMes(
-          dados.filter(dado => dado.type === 'KVW'), diasDoMes);
+          dados.filter(dado => dado.type === 'KWH'), diasDoMes);
 
 
         this.lineChartData = {
@@ -87,12 +80,12 @@ export class DashboardComponent implements OnInit {
             {
               label: 'Em reais',
               data: totaisReceitas,
-              borderColor: '#3366CC'
+              borderColor: '#060208'
             },
             {
-              label: 'Kvw',
+              label: 'Kwh',
               data: totaisDespesas,
-              borderColor: '#D62B00'
+              borderColor: '#605e61'
             }
           ]
         }
