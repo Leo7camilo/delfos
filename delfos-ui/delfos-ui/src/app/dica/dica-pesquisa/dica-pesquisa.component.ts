@@ -40,7 +40,6 @@ export class DicaPesquisaComponent implements OnInit {
     this.filtro.pagina = pagina;
     this.dicaService.pesquisar(this.filtro)
       .then(dados => {
-        console.log("Olaaaa "+ JSON.stringify(dados));
         this.dicaData = dados;
       });
   }

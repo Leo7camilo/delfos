@@ -39,11 +39,11 @@ public class BillController {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@GetMapping("/statistics/by-user/{userName}")
+	@GetMapping("/statistics/by-user/{email}")
 	@PreAuthorize("hasAuthority('ROLE_SEARCH_BILL') and hasAuthority('SCOPE_write')")
-	public List<BillStatiticsUser> findById(@PathVariable String userName) {
+	public List<BillStatiticsUser> findById(@PathVariable String email) {
 		
-		Optional<User> user = userService.findByName(userName);
+		Optional<User> user = userService.findByEmail(email);
 		if(!user.isPresent()) {
 			throw new UserNotFoundException();
 		}
@@ -52,10 +52,10 @@ public class BillController {
 	
 
 	@PreAuthorize("hasAuthority('ROLE_SEARCH_BILL') and hasAuthority('SCOPE_write')")
-	@GetMapping("/statistics/by-day/{userName}")
-	public List<BillStatiticsDay> byDay(@PathVariable String userName) {
+	@GetMapping("/statistics/by-day/{email}")
+	public List<BillStatiticsDay> byDay(@PathVariable String email) {
 		
-		Optional<User> user = userService.findByName(userName);
+		Optional<User> user = userService.findByEmail(email);
 		if(!user.isPresent()) {
 			throw new UserNotFoundException();
 		}

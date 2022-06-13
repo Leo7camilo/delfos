@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.usuarioLogado = this.auth.jwtPayload?.name;
+    this.usuarioLogado = this.auth.jwtPayload?.email;
 
     this.configurarGraficoPizza();
     this.configurarGraficoLinha();

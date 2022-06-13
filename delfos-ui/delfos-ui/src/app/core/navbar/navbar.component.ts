@@ -13,10 +13,6 @@ import { AuthService } from './../../seguranca/auth.service';
 export class NavbarComponent implements OnInit {
 
   exibindoMenu: boolean = true;
-  usuarioLogado: string = ''
-  logado: boolean = false;
-
-  showMenu = false;
 
   constructor(
     public auth: AuthService,
@@ -25,9 +21,6 @@ export class NavbarComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.usuarioLogado = this.auth.jwtPayload?.name;
-    this.showMenu = true;
-    this.logado = true;
   }
 
   temPermissao(permissao: string) {
@@ -37,8 +30,6 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.logoutService.logout()
       .then(() => {
-        this.usuarioLogado = '';
-        this.logado = false;
         this.router.navigate(['/login']);
       })
       .catch(erro => this.errorHandler.handle(erro));

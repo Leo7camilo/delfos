@@ -14,7 +14,7 @@ export class MoneyHttpInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.url.includes('/oauth/token') && this.auth.isAccessTokenInvalido() && !req.url.includes('/user')) {
+    if (!req.url.includes('/oauth/token') && this.auth.isAccessTokenInvalido() && !req.url.includes('/user') && !req.url.includes('/tokens/revoke')) {
       return from(this.auth.obterNovoAccessToken())
         .pipe(
           mergeMap(() => {
