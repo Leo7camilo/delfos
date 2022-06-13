@@ -1,0 +1,39 @@
+<nav class="navbar">
+
+  <div class="container">
+    <div class="grid">
+      <div class="col-12">
+        <!--<div [hidden]="showMenu">-->
+          <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu">
+            <i class="pi pi-bars"></i>
+
+          </a>
+      </div>
+    </div>
+  </div>
+
+  <!--<<div [hidden]="showMenu">-->
+    <ul class="navbar-menu" [hidden]="exibindoMenu">
+      <li class="navbar-usuario">{{ this.auth.jwtPayload?.name }}</li>
+      <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_SEARCH_BILL')">
+        <a routerLink="/dashboard">Dashboard</a>
+      </li>
+      <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_DISABLE_USER')">
+        <a routerLink="/pessoas">Editar Usuários</a>
+      </li>
+      <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_SEARCH_BILL')">
+        <a routerLink="/simulacoes">Simulações</a>
+      </li>
+      <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_SEARCH_BILL')">
+        <a routerLink="/dica">Dicas de Consumo</a>
+      </li>
+      <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_SEARCH_BILL')">
+        <a routerLink="/bandeira">Consultar Bandeira</a>
+      </li>
+
+      <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>
+    </ul>
+  <!--</div>-->
+
+
+</nav>

@@ -1,0 +1,60 @@
+<div class="container" style="max-width: 800px; margin: auto">
+
+  <form autocomplete="off" #cadastroForm="ngForm">
+    <div class="ui-g ui-fluid">
+
+      <div class="p-grid">
+        <div class="col-12">
+          <h1>Cadastrar Usuário</h1>
+        </div>
+
+        <br>
+
+        <div class="p-col-12 p-fluid">
+
+          <label>Nome</label>
+          <input pInputText type="text" name="name" placeholder="Nome" ngModel required #name>
+        </div>
+
+        <br>
+
+        <div class="p-col-10 p-md-5 p-fluid">
+          <label>Email</label>
+          <input pInputText type="email" name="email" placeholder="E-mail" ngModel required #email>
+        </div>
+
+        <br>
+
+        <div class="p-col-10 p-md-5 p-fluid">
+          <label>CPF</label>
+          <input pInputText type="text" name="cpf" placeholder="CPF" ngModel required #cpf>
+        </div>
+
+        <br>
+
+        <div class="p-col-6 p-md-3 p-fluid">
+          <label>Cep</label>
+          <input pInputText type="text" name="cep" placeholder="Cep" ngModel required #cep>
+        </div>
+
+        <br>
+
+        <div class="p-col-6 p-md-3 p-fluid">
+          <label>Senha</label>
+          <input pInputText type="password" name="password" placeholder="Senha" ngModel required #password>
+        </div>
+
+        <br>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Cadastrar" [disabled]="!cadastroForm.valid"
+            (click)="cadastrar(name.value, cpf.value, email.value, cep.value, password.value); password.value = '';"></button>
+
+            <a routerLink="/login">Voltar</a>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+</div>
